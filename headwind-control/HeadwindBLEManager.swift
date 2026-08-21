@@ -25,7 +25,9 @@ final class HeadwindBLEManager: NSObject, ObservableObject {
     }
 
     @Published private(set) var connectionState: ConnectionState = .idle
-    @Published private(set) var isOn = false
+    @Published private(set) var isOn = false {
+        didSet { HeadwindShared.defaults.set(isOn, forKey: HeadwindShared.isOnKey) }
+    }
     @Published private(set) var speed: Int = 0
     @Published var targetSpeed: Int = 50
 
@@ -61,8 +63,6 @@ final class HeadwindBLEManager: NSObject, ObservableObject {
         }
     }
 
-    private static let savedPeripheralIDKey = "HeadwindBLEManager.savedPeripheralID"
-
     private var central: CBCentralManager!
     private var peripheral: CBPeripheral?
     private var commandCharacteristic: CBCharacteristic?
@@ -71,12 +71,14 @@ final class HeadwindBLEManager: NSObject, ObservableObject {
     private var speedDebounceTask: Task<Void, Never>?
     private var pendingWriteCompletion: (() -> Void)?
 
+    /// Shared with the Control Center widget extension via an App Group, so both sides
+    /// reconnect to the same fan without a fresh scan.
     private var savedPeripheralID: UUID? {
         get {
-            UserDefaults.standard.string(forKey: Self.savedPeripheralIDKey).flatMap(UUID.init(uuidString:))
+            HeadwindShared.defaults.string(forKey: HeadwindShared.peripheralIDKey).flatMap(UUID.init(uuidString:))
         }
         set {
-            UserDefaults.standard.set(newValue?.uuidString, forKey: Self.savedPeripheralIDKey)
+            HeadwindShared.defaults.set(newValue?.uuidString, forKey: HeadwindShared.peripheralIDKey)
         }
     }
 

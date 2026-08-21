@@ -6,14 +6,65 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		C8A4C8A53037D148003AF818 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A4C8A43037D148003AF818 /* WidgetKit.framework */; };
+		C8A4C8A73037D148003AF818 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A4C8A63037D148003AF818 /* SwiftUI.framework */; };
+		C8A4C8B63037D149003AF818 /* fan-toggleExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C8A4C8A23037D148003AF818 /* fan-toggleExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		C8A4C8B43037D149003AF818 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C8A4C87E30379AB7003AF818 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C8A4C8A13037D148003AF818;
+			remoteInfo = "fan-toggleExtension";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		C8A4C8BB3037D149003AF818 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				C8A4C8B63037D149003AF818 /* fan-toggleExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		C8A4C88630379AB7003AF818 /* headwind-control.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "headwind-control.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8A4C8A23037D148003AF818 /* fan-toggleExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "fan-toggleExtension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C8A4C8A43037D148003AF818 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		C8A4C8A63037D148003AF818 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		C8A4C8B73037D149003AF818 /* Exceptions for "fan-toggle" folder in "fan-toggleExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = C8A4C8A13037D148003AF818 /* fan-toggleExtension */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		C8A4C88830379AB7003AF818 /* headwind-control */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = "headwind-control";
+			sourceTree = "<group>";
+		};
+		C8A4C8A83037D148003AF818 /* fan-toggle */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				C8A4C8B73037D149003AF818 /* Exceptions for "fan-toggle" folder in "fan-toggleExtension" target */,
+			);
+			path = "fan-toggle";
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -26,6 +77,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C8A4C89F3037D148003AF818 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C8A4C8A73037D148003AF818 /* SwiftUI.framework in Frameworks */,
+				C8A4C8A53037D148003AF818 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -33,6 +93,8 @@
 			isa = PBXGroup;
 			children = (
 				C8A4C88830379AB7003AF818 /* headwind-control */,
+				C8A4C8A83037D148003AF818 /* fan-toggle */,
+				C8A4C8A33037D148003AF818 /* Frameworks */,
 				C8A4C88730379AB7003AF818 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,8 +103,18 @@
 			isa = PBXGroup;
 			children = (
 				C8A4C88630379AB7003AF818 /* headwind-control.app */,
+				C8A4C8A23037D148003AF818 /* fan-toggleExtension.appex */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		C8A4C8A33037D148003AF818 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C8A4C8A43037D148003AF818 /* WidgetKit.framework */,
+				C8A4C8A63037D148003AF818 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -55,10 +127,12 @@
 				C8A4C88230379AB7003AF818 /* Sources */,
 				C8A4C88330379AB7003AF818 /* Frameworks */,
 				C8A4C88430379AB7003AF818 /* Resources */,
+				C8A4C8BB3037D149003AF818 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				C8A4C8B53037D149003AF818 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				C8A4C88830379AB7003AF818 /* headwind-control */,
@@ -69,6 +143,28 @@
 			productName = "headwind-control";
 			productReference = C8A4C88630379AB7003AF818 /* headwind-control.app */;
 			productType = "com.apple.product-type.application";
+		};
+		C8A4C8A13037D148003AF818 /* fan-toggleExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C8A4C8B83037D149003AF818 /* Build configuration list for PBXNativeTarget "fan-toggleExtension" */;
+			buildPhases = (
+				C8A4C89E3037D148003AF818 /* Sources */,
+				C8A4C89F3037D148003AF818 /* Frameworks */,
+				C8A4C8A03037D148003AF818 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				C8A4C8A83037D148003AF818 /* fan-toggle */,
+			);
+			name = "fan-toggleExtension";
+			packageProductDependencies = (
+			);
+			productName = "fan-toggleExtension";
+			productReference = C8A4C8A23037D148003AF818 /* fan-toggleExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -81,6 +177,9 @@
 				LastUpgradeCheck = 2660;
 				TargetAttributes = {
 					C8A4C88530379AB7003AF818 = {
+						CreatedOnToolsVersion = 26.6;
+					};
+					C8A4C8A13037D148003AF818 = {
 						CreatedOnToolsVersion = 26.6;
 					};
 				};
@@ -100,12 +199,20 @@
 			projectRoot = "";
 			targets = (
 				C8A4C88530379AB7003AF818 /* headwind-control */,
+				C8A4C8A13037D148003AF818 /* fan-toggleExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		C8A4C88430379AB7003AF818 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C8A4C8A03037D148003AF818 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +229,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C8A4C89E3037D148003AF818 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		C8A4C8B53037D149003AF818 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C8A4C8A13037D148003AF818 /* fan-toggleExtension */;
+			targetProxy = C8A4C8B43037D149003AF818 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		C8A4C88F30379AB7003AF818 /* Debug */ = {
@@ -249,8 +371,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "headwind-control/headwind-control.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2ST645J4RU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Headwind Remote uses Bluetooth to connect to and control your Wahoo KICKR HEADWIND fan.";
@@ -281,8 +405,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "headwind-control/headwind-control.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2ST645J4RU;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSBluetoothAlwaysUsageDescription = "Headwind Remote uses Bluetooth to connect to and control your Wahoo KICKR HEADWIND fan.";
@@ -308,6 +434,68 @@
 			};
 			name = Release;
 		};
+		C8A4C8B93037D149003AF818 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "fan-toggle/fan-toggleExtension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2ST645J4RU;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "fan-toggle/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "fan-toggle";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "wahoo.headwind-control.fan-toggle";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C8A4C8BA3037D149003AF818 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = "fan-toggle/fan-toggleExtension.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2ST645J4RU;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "fan-toggle/Info.plist";
+				INFOPLIST_KEY_CFBundleDisplayName = "fan-toggle";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "wahoo.headwind-control.fan-toggle";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -325,6 +513,15 @@
 			buildConfigurations = (
 				C8A4C89230379AB7003AF818 /* Debug */,
 				C8A4C89330379AB7003AF818 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C8A4C8B83037D149003AF818 /* Build configuration list for PBXNativeTarget "fan-toggleExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C8A4C8B93037D149003AF818 /* Debug */,
+				C8A4C8BA3037D149003AF818 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
