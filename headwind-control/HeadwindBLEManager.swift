@@ -29,31 +29,34 @@ final class HeadwindBLEManager: NSObject, ObservableObject {
         didSet { HeadwindShared.defaults.set(isOn, forKey: HeadwindShared.isOnKey) }
     }
     @Published private(set) var speed: Int = 0
-    @Published var targetSpeed: Int = 50
+    /// Seeded from the persisted "Fan Speed on Connect" setting at launch (see
+    /// AppSettings.defaultFanSpeedKey); picking a new default in Settings also updates this
+    /// live so it takes effect immediately, not just on next launch.
+    @Published var targetSpeed: Int
 
     var statusIcon: String {
         switch connectionState {
         case .connected where isOn:
-            return "wind"
+            return "none"
         case .connected:
-            return "wind"
+            return "none"
         case .scanning, .connecting:
-            return "antenna.radiowaves.left.and.right"
+            return "none"
         case .poweredOff, .error:
-            return "wind.circle"
+            return "none"
         default:
-            return "wind.circle"
+            return "none"
         }
     }
 
     var statusText: String {
         switch connectionState {
         case .poweredOff:
-            return "Bluetooth is off"
+            return "Bluetooth is Off"
         case .idle:
-            return "Tap Connect"
+            return ""
         case .scanning:
-            return "Searching for HEADWIND…"
+            return "Searching for Headwind…"
         case .connecting:
             return "Connecting…"
         case .connected:
@@ -70,6 +73,10 @@ final class HeadwindBLEManager: NSObject, ObservableObject {
     private var needsManualMode = true
     private var speedDebounceTask: Task<Void, Never>?
     private var pendingWriteCompletion: (() -> Void)?
+    /// `connect()` called before CBCentralManager has reported `.poweredOn` (e.g. at app
+    /// launch) can't proceed yet; this flag lets `centralManagerDidUpdateState` pick it
+    /// back up once the real state is known, instead of silently doing nothing.
+    private var autoConnectRequested = false
 
     /// Shared with the Control Center widget extension via an App Group, so both sides
     /// reconnect to the same fan without a fresh scan.
@@ -83,17 +90,31 @@ final class HeadwindBLEManager: NSObject, ObservableObject {
     }
 
     override init() {
+        targetSpeed = AppSettings.defaultFanSpeed
         super.init()
         central = CBCentralManager(delegate: self, queue: nil)
     }
 
     func connect() {
-        guard central.state == .poweredOn else {
+        autoConnectRequested = true
+        switch central.state {
+        case .poweredOn:
+            break
+        case .unknown, .resetting:
+            return // Wait for centralManagerDidUpdateState to resolve the real state.
+        default:
             connectionState = .poweredOff
             return
         }
-        if peripheral != nil, connectionState == .connected {
+        switch connectionState {
+        case .connected, .connecting, .scanning:
+            // Already connected, or a connection attempt is already in flight — a second
+            // call (e.g. .onAppear and scenePhase both firing on cold launch) would
+            // otherwise restart reconnect(to:) mid-handshake, resetting
+            // commandCharacteristic and connectionState and visibly bouncing the UI.
             return
+        case .poweredOff, .idle, .error:
+            break
         }
         if let savedID = savedPeripheralID {
             reconnect(to: savedID)
@@ -192,7 +213,7 @@ final class HeadwindBLEManager: NSObject, ObservableObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 12) { [weak self] in
             guard let self, self.connectionState == .scanning else { return }
             self.central.stopScan()
-            self.connectionState = .error("HEADWIND not found")
+            self.connectionState = .error("No Headwind Found")
         }
     }
 
@@ -257,6 +278,7 @@ final class HeadwindBLEManager: NSObject, ObservableObject {
     }
 
     private func performDisconnect() {
+        autoConnectRequested = false
         if let peripheral {
             central.cancelPeripheralConnection(peripheral)
         }
@@ -313,7 +335,9 @@ extension HeadwindBLEManager: CBCentralManagerDelegate {
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
         switch central.state {
         case .poweredOn:
-            if connectionState == .poweredOff {
+            if autoConnectRequested {
+                connect()
+            } else if connectionState == .poweredOff {
                 connectionState = .idle
             }
         case .poweredOff:
@@ -322,7 +346,7 @@ extension HeadwindBLEManager: CBCentralManagerDelegate {
         case .unauthorized:
             connectionState = .error("Bluetooth permission denied")
         default:
-            connectionState = .error("Bluetooth unavailable")
+            connectionState = .error("Bluetooth unavailable. Check that Bluetooth is enabled in Settings.")
         }
     }
 
@@ -367,7 +391,7 @@ extension HeadwindBLEManager: CBCentralManagerDelegate {
         resetConnection()
         isOn = false
         speed = 0
-        connectionState = error == nil ? .idle : .error("Connection lost")
+        connectionState = error == nil ? .idle : .error("Connection lost. Try moving closer to your Headwind.")
     }
 }
 
@@ -399,7 +423,22 @@ extension HeadwindBLEManager: CBPeripheralDelegate {
         }
         commandCharacteristic = characteristic
         peripheral.setNotifyValue(true, for: characteristic)
-        peripheral.readValue(for: characteristic)
+
+        // "Fan Speed on Connect" means what it says: while Auto Power On is enabled, every
+        // successful connection turns the fan on at the configured default, instead of
+        // leaving it connected-but-off until the user taps the power toggle themselves.
+        // Read the persisted default fresh here rather than using targetSpeed, which also
+        // tracks the fan's live reported speed via BLE notifications and could have drifted
+        // away from a default the user just changed in Settings.
+        if AppSettings.isAutoPowerOnEnabled {
+            // Skip the initial read: we're about to overwrite the fan's current state with
+            // the configured default anyway, and reading first would briefly report
+            // whatever stale state the fan was left in before our write lands — flickering
+            // the power button and preset selection through the wrong value in between.
+            turnOn(speed: AppSettings.defaultFanSpeed)
+        } else {
+            peripheral.readValue(for: characteristic)
+        }
     }
 
     func peripheral(
