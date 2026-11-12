@@ -33,13 +33,15 @@ struct FanSpeedSettingsView: View {
                         .contentShape(Rectangle())
                     }
                     .buttonStyle(.plain)
+                    // The checkmark is visual only; expose the selection to VoiceOver.
+                    .accessibilityAddTraits(option == defaultFanSpeed ? .isSelected : [])
                 }
             } footer: {
-                Text("The default fan speed when a Headwind is connected.")
+                Text("The fan speed that is set automatically when a Headwind is connected.")
             }
         }
         .listStyle(.insetGrouped)
-        .navigationTitle("Fan Speed on Connect")
+        .navigationTitle("Default Fan Speed")
         .navigationBarTitleDisplayMode(.inline)
     }
 }
