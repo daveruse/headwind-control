@@ -34,21 +34,6 @@ final class HeadwindBLEManager: NSObject, ObservableObject {
     /// live so it takes effect immediately, not just on next launch.
     @Published var targetSpeed: Int
 
-    var statusIcon: String {
-        switch connectionState {
-        case .connected where isOn:
-            return "none"
-        case .connected:
-            return "none"
-        case .scanning, .connecting:
-            return "none"
-        case .poweredOff, .error:
-            return "none"
-        default:
-            return "none"
-        }
-    }
-
     var statusText: String {
         switch connectionState {
         case .poweredOff:
@@ -58,9 +43,10 @@ final class HeadwindBLEManager: NSObject, ObservableObject {
         case .scanning:
             return "Searching for Headwind…"
         case .connecting:
-            return "Connecting…"
+            return "" // The Connect button already shows "Connecting".
         case .connected:
-            return isOn ? "On · \(speed)%" : "Off"
+            // While running, the preset buttons and wind effect show the fan's state.
+            return isOn ? "" : "Off"
         case .error(let message):
             return message
         }
@@ -213,7 +199,7 @@ final class HeadwindBLEManager: NSObject, ObservableObject {
         DispatchQueue.main.asyncAfter(deadline: .now() + 12) { [weak self] in
             guard let self, self.connectionState == .scanning else { return }
             self.central.stopScan()
-            self.connectionState = .error("No Headwind Found")
+            self.connectionState = .error("Could not connect to your Headwind. Try moving closer.")
         }
     }
 

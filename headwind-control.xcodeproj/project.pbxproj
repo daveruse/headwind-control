@@ -10,6 +10,7 @@
 		C8A4C8A53037D148003AF818 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A4C8A43037D148003AF818 /* WidgetKit.framework */; };
 		C8A4C8A73037D148003AF818 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C8A4C8A63037D148003AF818 /* SwiftUI.framework */; };
 		C8A4C8B63037D149003AF818 /* fan-toggleExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = C8A4C8A23037D148003AF818 /* fan-toggleExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		C8595E9630A62C80005D1273 /* Vortex in Frameworks */ = {isa = PBXBuildFile; productRef = C8595E9730A62C80005D1273 /* Vortex */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		C8A4C88330379AB7003AF818 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				C8595E9630A62C80005D1273 /* Vortex in Frameworks */,
 			);
 		};
 		C8A4C89F3037D148003AF818 /* Frameworks */ = {
@@ -132,6 +134,9 @@
 				C8A4C88830379AB7003AF818 /* headwind-control */,
 			);
 			name = "headwind-control";
+			packageProductDependencies = (
+				C8595E9730A62C80005D1273 /* Vortex */,
+			);
 			productName = "headwind-control";
 			productReference = C8A4C88630379AB7003AF818 /* headwind-control.app */;
 			productType = "com.apple.product-type.application";
@@ -181,6 +186,9 @@
 			);
 			mainGroup = C8A4C87D30379AB7003AF818;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				C8595E9530A62C80005D1273 /* XCRemoteSwiftPackageReference "Vortex" */,
+			);
 			preferredProjectObjectVersion = 100;
 			productRefGroup = C8A4C88730379AB7003AF818 /* Products */;
 			projectDirPath = "";
@@ -349,7 +357,7 @@
 		C8A4C89230379AB7003AF818 /* Debug configuration for PBXNativeTarget "headwind-control" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Wahoo;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "headwind-control/headwind-control.entitlements";
@@ -388,7 +396,7 @@
 		C8A4C89330379AB7003AF818 /* Release configuration for PBXNativeTarget "headwind-control" */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Wahoo;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = "headwind-control/headwind-control.entitlements";
@@ -514,6 +522,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		C8595E9530A62C80005D1273 /* XCRemoteSwiftPackageReference "Vortex" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/Vortex";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.4;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		C8595E9730A62C80005D1273 /* Vortex */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = C8595E9530A62C80005D1273 /* XCRemoteSwiftPackageReference "Vortex" */;
+			productName = Vortex;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = C8A4C87E30379AB7003AF818 /* Project object */;
 }

@@ -32,7 +32,7 @@ struct SettingsView: View {
                 } label: {
                     Label {
                         HStack {
-                            Text("Initial Fan Speed")
+                            Text("Default Fan Speed")
                             Spacer()
                             Text(AppSettings.fanSpeedLabel(defaultFanSpeed))
                                 .foregroundStyle(.secondary)
